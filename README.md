@@ -118,7 +118,60 @@ Normalize our dataset.
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 ## PROGRAM 
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder,StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+df = pd.read_csv("iris.csv")
+df
+X = df[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]
+  
+y = df[['species']]
+X.head()
 
+y.head()
+print(y.unique())
+le = LabelEncoder()
+y = le.fit_transform(y)
+
+y
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
+
+scaler = StandardScaler()  
+scaler.fit(X_train)
+
+X_train = scaler.transform(X_train)  
+X_test = scaler.transform(X_test)
+mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)  
+mlp.fit(X_train, y_train)  
+predictions = mlp.predict(X_test) 
+accuracy_score(y_test,predictions)
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+
+```
 ## OUTPUT 
+### Reading Dataset
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/60ee0a77-7778-4ad4-8fe8-ff5eaf72f8a3)
+
+### First five values of x and y
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/4dbc3a75-1bea-42c0-a66f-8c698eb81f81)
+
+### Prediction
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/e73edb2f-5146-4982-b25a-60c9441ff246)
+
+### Accuracy
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/7fa63f0f-029e-4667-a94b-2db523f70ad0)
+
+### Confusion Matrix
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/ccedbb8f-68e7-4453-89dc-981918aaef4f)
+
+### Classification report
+![image](https://github.com/SrinivasanAIDS/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/103049243/141315b4-96b9-47b1-88d9-a7a19e43f630)
 
 ## RESULT
+Thus a Multilayer Perceptron with Backpropagation is implemented for Multi classification
+
